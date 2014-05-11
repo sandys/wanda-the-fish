@@ -9,6 +9,8 @@ const PANEL_ICON_SIZE = 24;
 
 let fortune_msg, button, fortune, toggle, wanda;
 
+function decode_utf8(s) { return decodeURIComponent(escape(s)); }
+
 function _showFortune() {
 	
 	if (toggle == 0)
@@ -25,7 +27,8 @@ function _showFortune() {
 			try
 			{
 				let [res, stdout, stderr, status] = GLib.spawn_command_line_sync('fortune');
-				fortune = String.fromCharCode.apply(null, stdout);
+				fortune = decode_utf8( String.fromCharCode.apply(null, stdout) ) ;
+				//fortune =  String.fromCharCode.apply(null, stdout)  ;
 			}
 			catch(e)
 			{
