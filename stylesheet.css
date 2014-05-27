@@ -3,7 +3,8 @@
     font-size: 16px;
     font-family: Monospace;
 	color: #000000;
-	background-color: rgba(255,200,200,0.98);
+	/* this is Emerald 17-5641 - Pantone color of the year 2013 */
+	background-color: rgba(0,152,116,0.98);
     border-radius: 5px;
     padding: .5em;
 }
