@@ -1,8 +1,9 @@
 
 .fortune-label {
     font-size: 16px;
-    color: #000000;
-    background-color: rgba(255,100,100,0.98);
+    font-family: Monospace;
+	color: #000000;
+	background-color: rgba(255,200,200,0.98);
     border-radius: 5px;
     padding: .5em;
 }
