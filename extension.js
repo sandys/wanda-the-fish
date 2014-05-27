@@ -3,37 +3,59 @@ const St = imports.gi.St;
 const Main = imports.ui.main;
 const Gio = imports.gi.Gio;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
+const Convenience = Me.imports.convenience;
+const Gettext = imports.gettext.domain('wanda-the-fish');
+const _ = Gettext.gettext;
 
-let fortune_msg, button, fortune, visible;
+let msg, text, button, fortune, visible, error;
+let got_humour = true, settings;
+
+const GOT_HUMOUR_KEY = 'got-humour';
 
 function clicked() {
     if (visible) {
-        Main.uiGroup.remove_actor(fortune_msg);
-        fortune_msg = null;
+        Main.uiGroup.remove_actor(msg);
+        msg = null;
         fortune = null;
         visible = false;
     } else {
+        error = "";
+        fortune = "";
         try {
             let [res, stdout, stderr, status] = 
                 GLib.spawn_command_line_sync('fortune');
-            fortune = String(stdout).trim() || String(stderr).trim();
+            fortune = String(stdout).trim()
+            if (!fortune)
+                error = String(stderr).trim();
         } catch (e) {
-			fortune = _("Sorry, no wisdom for you today:\n%s").format(e.message);
+            error = e.message
         }
-		wanda = "Wanda the Oracle says:\n\n";
-        fortune_msg = new St.Label({style_class: 'fortune-label',
-                                    text: wanda + fortune});
-        Main.uiGroup.add_actor(fortune_msg);
-        fortune_msg.clutter_text.line_wrap = true;
+        if (fortune) {
+            text = got_humour && _(
+                "Wanda the Oracle says:\n\n%s").format(fortune)
+                || fortune;
+        } else {
+            text = got_humour && _(
+                "Sorry, no wisdom for you today:\n\n%s").format(error)
+                || error;
+        }
+        msg = new St.Label({style_class: got_humour && 'fortune-label'
+                                                    || 'fortune-label-black',
+                            text: text});
+        Main.uiGroup.add_actor(msg);
+        msg.clutter_text.line_wrap = true;
         let monitor = Main.layoutManager.primaryMonitor;
-        fortune_msg.set_position(
-            Math.floor(monitor.width / 2 - fortune_msg.width / 2),
-            Math.floor(monitor.height / 2 - fortune_msg.height / 2));
+        msg.set_position(
+            Math.floor(monitor.width / 2 - msg.width / 2),
+            Math.floor(monitor.height / 2 - msg.height / 2));
         visible = true;
     }    
 }
 
 function init() {
+    Convenience.initTranslations();
+    settings = Convenience.getSettings();
+    got_humour = settings.get_boolean(GOT_HUMOUR_KEY);
     visible = false;
     button = new St.Bin({style_class: 'panel-button',
                          reactive: true,
@@ -41,7 +63,9 @@ function init() {
                          x_fill: true,
                          y_fill: false,
                          track_hover: true});
-    let gicon = Gio.icon_new_for_string(Me.path + "/icons/wanda3.svg");
+    let gicon = Gio.icon_new_for_string(Me.path + (got_humour
+                                        && "/icons/wanda3.svg"
+                                        || "/icons/wanda-bw.svg"));
     let icon = new St.Icon({gicon: gicon});
     button.set_child(icon);
     button.connect('button-press-event', clicked);

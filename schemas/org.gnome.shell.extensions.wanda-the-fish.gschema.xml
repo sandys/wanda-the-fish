@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/org/gnome/shell/extensions/wanda-the-fish/" id="org.gnome.shell.extensions.wanda-the-fish">    
+    <key type="b" name="got-humour">
+        <default>true</default>
+        <summary>Got humour</summary>
+        <description>Use fancy text and icon.</description>
+    </key>  
+  </schema>
+</schemalist>
