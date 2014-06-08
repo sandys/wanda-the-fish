@@ -4,6 +4,10 @@ const Main = imports.ui.main;
 const Gio = imports.gi.Gio;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 
+const Convenience = Me.imports.convenience;
+const Gettext = imports.gettext.domain('wandathefish');
+const _ = Gettext.gettext;
+
 let fortune_msg, button, fortune, visible;
 
 function clicked() {
@@ -20,7 +24,7 @@ function clicked() {
         } catch (e) {
 			fortune = _("Sorry, no wisdom for you today:\n%s").format(e.message);
         }
-		wanda = "Wanda the Oracle says:\n\n";
+		wanda = _("Wanda the Oracle says:")+"\n\n";
         fortune_msg = new St.Label({style_class: 'fortune-label',
                                     text: wanda + fortune});
         Main.uiGroup.add_actor(fortune_msg);
@@ -45,6 +49,7 @@ function init() {
     let icon = new St.Icon({gicon: gicon});
     button.set_child(icon);
     button.connect('button-press-event', clicked);
+    Convenience.initTranslations("wandathefish");
 }
 
 function enable() {
