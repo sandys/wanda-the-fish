@@ -12,5 +12,5 @@
   "settings-schema": "org.gnome.shell.extensions.wanda-the-fish",
   "gettext-domain": "wanda-the-fish",
   "uuid": "wandathefish@sss.lambdacurry.com", 
-  "version": 1.1
+  "version": 1.2
 }
