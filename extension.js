@@ -53,7 +53,7 @@ function clicked() {
 }
 
 function init() {
-    Convenience.initTranslations();
+    Convenience.initTranslations('wanda-the-fish');
     settings = Convenience.getSettings();
     got_humour = settings.get_boolean(GOT_HUMOUR_KEY);
     visible = false;
