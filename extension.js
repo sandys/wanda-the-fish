@@ -76,5 +76,11 @@ function enable() {
 }
 
 function disable() {
+	if (visible) {
+        Main.uiGroup.remove_actor(msg);
+        msg = null;
+        fortune = null;
+        visible = false;
+    }
     Main.panel._rightBox.remove_child(button);
 }
