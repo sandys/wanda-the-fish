@@ -66,7 +66,10 @@ function init() {
     let gicon = Gio.icon_new_for_string(Me.path + (got_humour
                                         && "/icons/wanda3.svg"
                                         || "/icons/wanda-bw.svg"));
-    let icon = new St.Icon({gicon: gicon});
+    let icon = new St.Icon({
+        // icon_type: St.IconType.SYMBOLIC,
+                            icon_size: 16,
+                            gicon: gicon});
     button.set_child(icon);
     button.connect('button-press-event', clicked);
 }

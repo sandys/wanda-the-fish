@@ -17,3 +17,14 @@
     border-radius: 5px;
     padding: .5em;
 }
+
+.your-icon-name {
+    background-image: url("/icons/wanda3.svg");
+    background-size: 100px;
+    height: 100px;
+    width: 100px;
+    color: #eeeeee;
+    /* background-color: #000000; */
+    /* border-radius: 5px; */
+    /* padding: .5em; */
+}
